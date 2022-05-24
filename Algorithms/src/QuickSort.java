@@ -1,45 +1,45 @@
-public class QuickSort {
+class QuickSort {
 
     public static void main(String[] args) {
-        int arr[] = { 4, 1, 3, 9, 7 };
-        QuickSort.partition(arr, 0, 4);
-        printer(arr);
+        int[] arr = { 4, 1, 3, 9, 7 };
+        int n = arr.length;
+        quickSort(arr, 0, n - 1);
+        System.out.println("Output: ");
+        printArray(arr, n);
     }
 
-    public static void partition(int arr[], int low, int high) {
-        if (low >= high) {
-            return;
-        }
+    static void swap(int[] arr, int i, int j) {
+        int num = arr[i];
+        arr[i] = arr[j];
+        arr[j] = num;
+    }
 
-        int pivot = arr[high];
-        int lp = low;
-        int rp = high;
-        while (lp < rp) {
-            while (arr[lp] <= pivot && lp < rp) {
-                lp++;
+    static int partition(int[] arr, int low, int high) {
+        int num1 = arr[high];
+        int i = (low - 1);
+
+        for (int j = low; j <= high - 1; j++) {
+            if (arr[j] < num1) {
+                i++;
+                swap(arr, i, j);
             }
-            while (arr[rp] >= pivot && lp < rp) {
-                rp--;
-            }
-
-            swap(arr, lp, rp);
         }
 
-        swap(arr, lp, high);
-
-        partition(arr, low, lp - 1);
-        partition(arr, lp + 1, high);
+        swap(arr, i + 1, high);
+        return (i + 1);
     }
 
-    public static void swap(int[] arr, int index1, int index2) {
-        int num = arr[index1];
-        arr[index1] = arr[index2];
-        arr[index2] = num;
-    }
-
-    public static void printer(int[] arr) {
-        for (int items : arr) {
-            System.out.print(items);
+    static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            int pi = partition(arr, low, high);
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
         }
+    }
+
+    static void printArray(int[] arr, int size) {
+        for (int i = 0; i < size; i++)
+            System.out.print(arr[i] + " ");
+        System.out.println();
     }
 }
